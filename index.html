@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drive 圖片連結提取器</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="wrap">
+  <h1>Drive 圖片連結提取器</h1>
+
+  <section class="input-row">
+    <input id="folderInput" type="text" placeholder="貼 Google Drive 資料夾連結或資料夾 ID" autocomplete="off">
+    <button id="extractBtn" type="button">抽取</button>
+  </section>
+
+  <section class="opts">
+    <label for="sizeSelect">縮圖尺寸</label>
+    <select id="sizeSelect">
+      <option value="w1000" selected>w1000</option>
+      <option value="w400">w400</option>
+      <option value="w800">w800</option>
+      <option value="w1600">w1600</option>
+      <option value="w2000">w2000</option>
+    </select>
+  </section>
+
+  <p id="status" class="status" role="status" aria-live="polite"></p>
+  <p id="note" class="note"></p>
+
+  <section id="summaryBar" class="summary" hidden>
+    <span id="summaryText"></span>
+    <span class="actions">
+      <button id="makePublicBtn" type="button" hidden></button>
+      <button id="copyLockedBtn" type="button" hidden>複製未授權清單</button>
+      <button id="copyAllBtn" type="button">全部複製連結</button>
+      <button id="exportBtn" type="button">下載 Excel</button>
+    </span>
+  </section>
+
+  <table id="resultTable" hidden>
+    <thead>
+      <tr><th>預覽</th><th>檔名</th><th>所屬資料夾</th><th>連結</th><th>File ID</th><th>狀態</th></tr>
+    </thead>
+    <tbody id="resultBody"></tbody>
+  </table>
+
+  <p id="empty" class="empty" hidden>呢個資料夾入面搵唔到圖片。</p>
+</main>
+
+<script src="config.js"></script>
+<script src="lib.js"></script>
+<script src="vendor/xlsx.mini.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
