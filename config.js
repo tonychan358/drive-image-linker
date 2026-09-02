@@ -3,7 +3,7 @@
  */
 var CONFIG = {
   // Apps Script Web App 部署網址，以 /exec 結尾
-  API_URL: 'https://script.google.com/macros/s/XXXXXXXXXXXXXXXX/exec',
+  API_URL: 'https://script.google.com/macros/s/AKfycbzD17-043VPkUoz_sXVDKp9Y2BKQ9GGkVLj5b7M2_mQ10a5O4YX1L6boxMNa5UnClp04A/exec',
   // 同 Apps Script 專案屬性 API_TOKEN 一樣嘅字串
-  TOKEN: 'change-me',
+  TOKEN: 'b356df7f22d0636c0e520d7a0a742530b194bc19017e24b2',
 };
