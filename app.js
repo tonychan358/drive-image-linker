@@ -82,7 +82,7 @@ function renderTable() {
 
 function renderRow(f) {
   var status = ui_statusOf(f);
-  var url = ui_buildThumbnailUrl(f.id, state.size);
+  var url = ui_buildThumbnailUrl(f.id, state.size, f.resourceKey);
   var tr = document.createElement('tr');
 
   // 預覽：注意呢張圖係用你（已登入）嘅身分載入，
@@ -92,7 +92,7 @@ function renderRow(f) {
   var img = document.createElement('img');
   img.loading = 'lazy';
   img.alt = f.name;
-  img.src = ui_buildThumbnailUrl(f.id, 'w120');
+  img.src = ui_buildThumbnailUrl(f.id, 'w120', f.resourceKey);
   img.onerror = function () {
     var ph = document.createElement('div');
     ph.className = 'ph';
@@ -180,16 +180,17 @@ function postAction(payload) {
 }
 
 function makePublic() {
-  var ids = state.files
+  // 連 resourceKey 一齊傳：後端改完要重新實測，冇 key 嘅話舊檔實測一定失敗
+  var items = state.files
     .filter(function (f) { return ui_statusOf(f) === 'fixable'; })
-    .map(function (f) { return f.id; });
-  if (!ids.length) return;
+    .map(function (f) { return { id: f.id, resourceKey: f.resourceKey || '' }; });
+  if (!items.length) return;
 
   var btn = $('makePublicBtn');
   btn.disabled = true;
-  setStatus('正在設定 ' + ids.length + ' 張相為公開，改完會即時重新實測⋯⋯');
+  setStatus('正在設定 ' + items.length + ' 張相為公開，改完會即時重新實測⋯⋯');
 
-  postAction({ action: 'makePublic', token: CONFIG.TOKEN, ids: ids })
+  postAction({ action: 'makePublic', token: CONFIG.TOKEN, files: items })
     .then(function (data) {
       if (!data.ok) { setStatus('❌ ' + data.error); return; }
 

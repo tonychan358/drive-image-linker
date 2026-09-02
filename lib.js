@@ -3,9 +3,14 @@
  * 亦令 tests/load-gs.mjs 可以用同一個 vm harness 載入。
  */
 
-/** 同 src/Lib.gs 嘅 lib_buildThumbnailUrl 必須逐字一致（有 parity test 鎖住）。 */
-function ui_buildThumbnailUrl(id, size) {
-  return 'https://drive.google.com/thumbnail?id=' + id + '&sz=' + size;
+/**
+ * 同 src/Lib.gs 嘅 lib_buildThumbnailUrl 必須逐字一致（有 parity test 鎖住）。
+ * resourceKey 係舊檔匿名存取嘅必要參數，冇就唔加。
+ */
+function ui_buildThumbnailUrl(id, size, resourceKey) {
+  var url = 'https://drive.google.com/thumbnail?id=' + id + '&sz=' + size;
+  if (resourceKey) url += '&resourcekey=' + resourceKey;
+  return url;
 }
 
 function ui_statusOf(file) {
@@ -48,7 +53,7 @@ function ui_excelRows(files, size) {
     rows.push([
       f.name,
       f.folderPath,
-      ui_buildThumbnailUrl(f.id, size),
+      ui_buildThumbnailUrl(f.id, size, f.resourceKey),
       f.id,
       ui_statusLabel(ui_statusOf(f)),
     ]);
